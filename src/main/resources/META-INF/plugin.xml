@@ -1,0 +1,41 @@
+<!-- Описание плагина: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Уникальный id плагина, менять между версиями нельзя -->
+    <id>dev.syaroslavtsev.minibigo.MiniBigO</id>
+
+    <!-- Название плагина -->
+    <name>MiniBigO</name>
+
+    <!-- Автор -->
+    <vendor url="https://github.com/StanislavYaroslavtsev">Stanislav Yaroslavtsev</vendor>
+
+    <!-- Описание для страницы плагина в IDE -->
+    <description><![CDATA[
+        Shows the estimated time complexity of every Java method in big-O notation,
+        as an inlay hint at the end of the line with the method name.
+        <p>Example: <code>O(n² log n)</code></p>
+        <h3>Features</h3>
+        <ul>
+            <li>Static estimate from loop nesting: <code>for</code>, for-each, <code>while</code> and <code>do-while</code>.
+                Nested loops multiply; of sequential loops the heaviest one counts.</li>
+            <li>Loops whose counter is multiplied or divided are logarithmic; loops with constant bounds are <code>O(1)</code>.</li>
+            <li>Can be switched off in <em>Settings | Editor | Inlay Hints | Other | Big-O Complexity</em>.</li>
+        </ul>
+        <h3>Limitations</h3>
+        <p>The result is a heuristic. All loops are assumed to run over the same size <code>n</code>.
+        Recursion and method calls count as <code>O(1)</code>;
+        lambdas, streams, <code>break</code> and <code>return</code> are not taken into account.</p>
+    ]]></description>
+
+    <!-- Нужен Java-плагин IDE, чтобы работать с PSI Java-кода -->
+
+    <resource-bundle>messages.MiniBigOBundle</resource-bundle>
+
+    <depends>com.intellij.java</depends>
+    <!-- Регистрируем провайдер inlay-подсказок для Java -->
+    <extensions defaultExtensionNs="com.intellij">
+        <codeInsight.declarativeInlayProvider group="OTHER_GROUP" implementationClass="dev.syaroslavtsev.minibigo.ComplexityInlayHintsProvider" isEnabledByDefault="true"
+                                              language="JAVA"
+                                              nameKey="inlay.complexity.name" providerId="minibigo.complexity"/>
+    </extensions>
+</idea-plugin>
