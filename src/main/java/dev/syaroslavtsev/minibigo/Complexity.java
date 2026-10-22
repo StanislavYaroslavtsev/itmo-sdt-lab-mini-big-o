@@ -30,7 +30,7 @@ public record Complexity(int nPower, int logPower) {
     }
 
     /** Произведение оценок (для вложенных циклов): степени складываются. */
-    public Complexity times(Complexity other) {
+    public Complexity multiply(Complexity other) {
         return new Complexity(nPower + other.nPower, logPower + other.logPower);
     }
 

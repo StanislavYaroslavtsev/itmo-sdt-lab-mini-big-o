@@ -58,7 +58,7 @@ flowchart TB
     ide(["IntelliJ IDEA<br/>проход inlay-подсказок"]) --> xml["plugin.xml<br/>регистрирует провайдер в точке расширения<br/>codeInsight.declarativeInlayProvider"]
     xml --> provider["ComplexityInlayHintsProvider<br/>находит имена методов, ставит подсказки"]
     provider -- "PsiMethod" --> estimator["ComplexityEstimator<br/>обходит тело метода (PSI)<br/>и строит оценку"]
-    estimator -- "times / max" --> complexity["Complexity<br/>оценка O(nᵃ logᵇ n)"]
+    estimator -- "multiply / max" --> complexity["Complexity<br/>оценка O(nᵃ logᵇ n)"]
     estimator -- "Complexity" --> provider
     provider -- "текст подсказки, например O(n²)" --> editor(["Редактор"])
 ```
@@ -68,7 +68,7 @@ flowchart TB
 | `plugin.xml` | Описывает плагин, его зависимость от Java-плагина и провайдер inlay-подсказок для `JAVA`. |
 | `ComplexityInlayHintsProvider` | Точка входа, которую вызывает IDE. Перебирает PSI-элементы файла, выбирает методы, запрашивает у анализатора сложность и добавляет подсказку в конец строки с именем метода. |
 | `ComplexityEstimator` | Анализ. `JavaRecursiveElementVisitor`, который обходит тело метода, определяет, сколько раз выполняется каждый цикл, и объединяет результаты. |
-| `Complexity` | Неизменяемая оценка `O(nᵃ logᵇ n)`: record из двух чисел — степени `n` и степени `log n`. Умеет умножаться (`times`), выбирать большую из двух (`max`) и выводиться строкой. |
+| `Complexity` | Неизменяемая оценка `O(nᵃ logᵇ n)`: record из двух чисел — степени `n` и степени `log n`. Умеет умножаться (`multiply`), выбирать большую из двух (`max`) и выводиться строкой. |
 
 ### Принцип работы
 

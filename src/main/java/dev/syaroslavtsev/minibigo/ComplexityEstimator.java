@@ -81,7 +81,7 @@ public final class ComplexityEstimator extends JavaRecursiveElementVisitor {
      * @param iterations сколько итераций делает цикл
      */
     private void enterLoop(PsiLoopStatement loop, Complexity iterations) {
-        Complexity current = stack.peek().times(iterations);
+        Complexity current = stack.peek().multiply(iterations);
         stack.push(current);
         result = result.max(current);
         try {

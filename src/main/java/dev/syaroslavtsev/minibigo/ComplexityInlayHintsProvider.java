@@ -23,7 +23,6 @@ public class ComplexityInlayHintsProvider implements InlayHintsProvider {
             }
 
             String text = ComplexityEstimator.estimate(method).toString();
-            // getTextOffset() у метода указывает на имя, а не на аннотации над ним
             int line = editor.getDocument().getLineNumber(method.getTextOffset());
 
             sink.addPresentation(
